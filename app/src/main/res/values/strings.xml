@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">HospitalSX</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Carlitos</string>
+    <string name="nav_header_subtitle">carloshvsa21@hotmail.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Configuración</string>
+
+    <string name="menu_inicio">Inicio</string>
+    <string name="menu_editar">Editar</string>
+    <string name="menu_eliminar">Eliminar</string>
+    <string name="menu_listar">Listar</string>
+    <string name="menu_crear">Crear</string>
+    <string name="menu_acercade">Acerca de</string>
+    //Interfaz crear
+    <string name="id">ID</string>
+    <string name="nombre">Nombre</string>
+    <string name="fecha_ingreso">Fecha de ingreso</string>
+    <string name="edad">Edad</string>
+    <string name="peso">Peso</string>
+    <string name="estatura">Estatura</string>
+    <string name="genero">Género</string>
+    <string name="area_medica">Área médica</string>
+    <string name="medico">Médico</string>
+    <string name="limpiar">Limpiar</string>
+    <string name="guardar">Guardar</string>
+    <string name="buscar">Buscar</string>
+    <string name="descripcion">Imagen Paciente</string>
+    <string name="universidad">Unidad Académica Profesional Tiaguistenco</string>
+    <string name="alumno">Carlos Alberto Hernández Velázquez</string>
+    <string name="profesor">Rocío Elizabeth Pulido Alba</string>
+    <string name="clase">Dispositivos Móviles</string>
+    <string name="version">Versión 1.0 2022</string>
+</resources>
