@@ -35,6 +35,7 @@ public class ListarFragment extends Fragment {
     ArrayList<String> registros;
     ArrayList<String> imagenes;
 
+
     sqlite sqLite;
 
     public static ListarFragment newInstance() {

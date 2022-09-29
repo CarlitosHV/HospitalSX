@@ -19,7 +19,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.CAHV.fileprovider"
+            android:authorities="com.example.HospitalSX.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
