@@ -45,12 +45,12 @@ public class EditarFragment extends Fragment implements  View.OnClickListener, A
     public static String img = "", a, d, sex;
     public static final int REQUEST_TAKE_PHOTO =1;
     private Uri photoUri;
-    public com.example.hospitalsx.bd.sqlite sqlite;
+
 
     private CrearViewModel mViewModel;
     private String rutaImagen;
 
-    sqlite sqLite;
+    public sqlite sqlite;
 
     private FragmentEditarBinding binding;
 
@@ -65,7 +65,7 @@ public class EditarFragment extends Fragment implements  View.OnClickListener, A
         final TextView textView = binding.textEditar;
         editarModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        sqLite = new sqlite(getContext());
+        sqlite = new sqlite(getContext());
         Componentes(root);
         return root;
     }
@@ -95,6 +95,7 @@ public class EditarFragment extends Fragment implements  View.OnClickListener, A
         btnCalendario.setOnClickListener(this);
         btnLimpiar.setOnClickListener(this);
         btnGuardar.setOnClickListener(this);
+        btnBuscar.setOnClickListener(this);
         ivFoto.setOnClickListener(this);
     }
 
@@ -250,8 +251,8 @@ public class EditarFragment extends Fragment implements  View.OnClickListener, A
                 }else{
                     sqlite.abrir();
                     int idp = Integer.parseInt(etID.getText().toString());
-                    if (sqLite.getValor(idp).getCount()==1){
-                        Cursor cursor = sqLite.getValor(idp);
+                    if (sqlite.getValor(idp).getCount()==1){
+                        Cursor cursor = sqlite.getValor(idp);
                         if (cursor.moveToFirst()){
                             do {
                                 etNombre.setText(cursor.getString(1));
