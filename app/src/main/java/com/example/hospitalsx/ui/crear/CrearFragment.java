@@ -1,8 +1,14 @@
 package com.example.hospitalsx.ui.crear;
 
+import static android.app.Activity.RESULT_OK;
+
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,6 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +35,8 @@ import android.widget.Toast;
 import com.example.hospitalsx.R;
 import com.example.hospitalsx.bd.sqlite;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
@@ -48,6 +59,7 @@ public class CrearFragment extends Fragment implements  View.OnClickListener, Ad
     public sqlite sqlite;
 
     private CrearViewModel mViewModel;
+    private String rutaImagen;
 
     public static CrearFragment newInstance() {
         return new CrearFragment();
@@ -61,6 +73,46 @@ public class CrearFragment extends Fragment implements  View.OnClickListener, Ad
         Componentes(root);
 
         return root;
+    }
+
+    private void abrirCamara(){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(intent.resolveActivity(getActivity().getPackageManager()) != null)
+        {
+            File imagenArchivo = null;
+            try
+            {
+                imagenArchivo = crearImagen();
+            }catch (IOException ex)
+            {
+                Log.e("Error ", ex.toString());
+            }
+
+            if(imagenArchivo !=null)
+            {
+                Uri fotoUri = FileProvider.getUriForFile(getContext(), "com.example.HospitalSX.fileprovider",imagenArchivo);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, fotoUri);
+                startActivityForResult(intent,1);
+            }
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            //Bundle extras = data.getExtras();
+            Bitmap imgBitMap = BitmapFactory.decodeFile(rutaImagen);
+            ivFoto.setImageBitmap(imgBitMap);
+
+        }
+    }
+
+    private File crearImagen() throws IOException {
+        String nombreImagen = "paciente_";
+        File directorio = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File imagen = File.createTempFile(nombreImagen,".jpg",directorio);
+        rutaImagen = imagen.getAbsolutePath();
+        return imagen;
     }
 
     private void Componentes (View root){
@@ -192,6 +244,7 @@ public class CrearFragment extends Fragment implements  View.OnClickListener, Ad
                 break;
                 //Hacer funcionar esta parte
             case R.id.ivcFoto:
+                abrirCamara();
                 break;
             case R.id.btnCguardar:
                 if (etID.getText().equals("") || etNombre.getText().equals("")
@@ -208,6 +261,7 @@ public class CrearFragment extends Fragment implements  View.OnClickListener, Ad
                     String edad = etEdad.getText().toString().trim();
                     String estatura = etEstatura.getText().toString().trim();
                     String peso = etPeso.getText().toString().trim();
+                    galleryAddPic();
                     sqlite.abrir();
                     if (sqlite.addRegistroPaciente(id, a, d, nom, sex, fecha, edad, estatura, peso, img)){
                         Toast.makeText(getContext(), "Información guardada con éxito", Toast.LENGTH_SHORT).show();
@@ -239,6 +293,13 @@ public class CrearFragment extends Fragment implements  View.OnClickListener, Ad
         spnArea.setAdapter(areaAdapter);
         spnDr.setAdapter(drAdapter);
         spnGenero.setAdapter(generoAdapter);
+    }
 
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(".");
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        getContext().sendBroadcast(mediaScanIntent);
     }
 }
