@@ -29,7 +29,9 @@ import com.example.hospitalsx.bd.sqlite;
 import com.example.hospitalsx.databinding.FragmentEditarBinding;
 import com.example.hospitalsx.ui.crear.CrearViewModel;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 public class EditarFragment extends Fragment implements  View.OnClickListener, AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener{
@@ -104,7 +106,7 @@ public class EditarFragment extends Fragment implements  View.OnClickListener, A
     private void SpinnerComponentes(View root){
         ArrayAdapter<CharSequence> areaAdapter, drAdapter, generoAdapter;
         areaAdapter = ArrayAdapter.createFromResource(getContext(), R.array.opciones, android.R.layout.simple_spinner_item);
-        drAdapter = ArrayAdapter.createFromResource(getContext(), R.array.o0, android.R.layout.simple_spinner_item);
+        drAdapter = ArrayAdapter.createFromResource(getContext(), R.array.o3, android.R.layout.simple_spinner_item);
         generoAdapter = ArrayAdapter.createFromResource(getContext(), R.array.sx, android.R.layout.simple_spinner_item);
 
         spnArea = root.findViewById(R.id.spnEDareaP);
@@ -198,7 +200,7 @@ public class EditarFragment extends Fragment implements  View.OnClickListener, A
 
         ArrayAdapter<CharSequence> areaAdapter, drAdapter, generoAdapter;
         areaAdapter = ArrayAdapter.createFromResource(getContext(), R.array.opciones, android.R.layout.simple_spinner_item);
-        drAdapter = ArrayAdapter.createFromResource(getContext(), R.array.o0, android.R.layout.simple_spinner_item);
+        drAdapter = ArrayAdapter.createFromResource(getContext(), R.array.o3, android.R.layout.simple_spinner_item);
         generoAdapter = ArrayAdapter.createFromResource(getContext(), R.array.sx, android.R.layout.simple_spinner_item);
         spnArea.setAdapter(areaAdapter);
         spnDr.setAdapter(drAdapter);
@@ -270,6 +272,23 @@ public class EditarFragment extends Fragment implements  View.OnClickListener, A
                                 Bitmap imgBitMap = BitmapFactory.decodeFile(img);
                                 ivFoto.setImageBitmap(imgBitMap);
 
+                                ArrayAdapter<CharSequence> areaAdapter, drAdapter, generoAdapter;
+                                areaAdapter = ArrayAdapter.createFromResource(getContext(), R.array.opciones, android.R.layout.simple_spinner_item);
+                                drAdapter = ArrayAdapter.createFromResource(getContext(), R.array.o0, android.R.layout.simple_spinner_item);
+                                generoAdapter = ArrayAdapter.createFromResource(getContext(), R.array.sx, android.R.layout.simple_spinner_item);
+
+                                spnArea.setAdapter(areaAdapter);
+                                spnDr.setAdapter(drAdapter);
+                                spnGenero.setAdapter(generoAdapter);
+
+                                int posArea =  BuscarPos(a, areaAdapter.getAutofillOptions());
+                                int posDr = BuscarPos(d, drAdapter.getAutofillOptions());
+                                int posGen = BuscarPos(sex, generoAdapter.getAutofillOptions());
+
+                                spnArea.setSelection(posArea);
+                                spnDr.setSelection(posDr);
+                                spnGenero.setSelection(posGen);
+
                             }while(cursor.moveToNext());
                         }
                     }else{
@@ -279,5 +298,15 @@ public class EditarFragment extends Fragment implements  View.OnClickListener, A
                 }
                 break;
         }
+    }
+
+    public int BuscarPos(String buscar, CharSequence[] arreglo){
+        int posi = -1;
+        for(int i = 0; i<arreglo.length; i++){
+            if (buscar.equalsIgnoreCase(arreglo[i]+"")){
+                return i;
+            }
+        }
+        return posi;
     }
 }
