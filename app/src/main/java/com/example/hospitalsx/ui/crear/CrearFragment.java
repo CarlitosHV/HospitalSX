@@ -112,6 +112,7 @@ public class CrearFragment extends Fragment implements  View.OnClickListener, Ad
         File directorio = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File imagen = File.createTempFile(nombreImagen,".jpg",directorio);
         rutaImagen = imagen.getAbsolutePath();
+        img = rutaImagen;
         return imagen;
     }
 
@@ -249,6 +250,7 @@ public class CrearFragment extends Fragment implements  View.OnClickListener, Ad
             case R.id.btnCguardar:
                 if (etID.getText().equals("") || etNombre.getText().equals("")
                 || etPeso.getText().equals("") || etEstatura.getText().equals("") || etEdad.getText().equals("") || etFecha.getText().equals("")
+                        || img.equals("")
                 ){
                     Toast.makeText(getContext(), "Campos vacíos, verifique la información", Toast.LENGTH_SHORT).show();
                 }else{
@@ -263,7 +265,7 @@ public class CrearFragment extends Fragment implements  View.OnClickListener, Ad
                     String peso = etPeso.getText().toString().trim();
                     galleryAddPic();
                     sqlite.abrir();
-                    if (sqlite.addRegistroPaciente(id, a, d, nom, sex, fecha, edad, estatura, peso, img)){
+                    if (sqlite.addRegistroPaciente(id, a, d, nom, sex, fecha, edad, estatura, peso, rutaImagen)){
                         Toast.makeText(getContext(), "Información guardada con éxito", Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(getContext(), "Error al guardar la información", Toast.LENGTH_SHORT).show();
@@ -285,6 +287,7 @@ public class CrearFragment extends Fragment implements  View.OnClickListener, Ad
         a="";
         d="";
         sex="";
+        img ="";
 
         ArrayAdapter<CharSequence> areaAdapter, drAdapter, generoAdapter;
         areaAdapter = ArrayAdapter.createFromResource(getContext(), R.array.opciones, android.R.layout.simple_spinner_item);

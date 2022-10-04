@@ -115,35 +115,36 @@
                 <TextView
                     android:id="@+id/txtELpeso"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="23dp"
                     android:text="@string/peso"
                     android:textSize="25sp" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="25dp"
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnEDlimpiar"
-                    android:layout_margin="5dp"
+                    android:id="@+id/btnELlimpiar"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:text="@string/limpiar"
-                    style="?android:attr/buttonBarButtonStyle" />
+                    android:text="@string/limpiar" />
 
                 <Button
-                    android:id="@+id/btnEDguardar"
-                    android:layout_margin="5dp"
+                    android:id="@+id/btnELeloiminar"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:text="@string/guardar"
-                    style="?android:attr/buttonBarButtonStyle" />
+                    android:text="@string/guardar" />
             </LinearLayout>
 
         </LinearLayout>

@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -84,7 +86,7 @@ public class ListarFragment extends Fragment {
     public void cargarImagen(String imagen, ImageView iv){
         try {
             File file = new File(imagen);
-            Uri uriPhoto = FileProvider.getUriForFile(getContext(), "com.example.HospitalSX", file);
+            Uri uriPhoto = FileProvider.getUriForFile(getContext(), "com.example.HospitalSX.fileprovider", file);
             iv.setImageURI(uriPhoto);
         }catch(Exception ex){
             Toast.makeText(getContext(), "Error al cargar la imagen", Toast.LENGTH_SHORT).show();
@@ -92,6 +94,8 @@ public class ListarFragment extends Fragment {
                     "\n Causa" + ex.getCause());
         }
     }
+
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

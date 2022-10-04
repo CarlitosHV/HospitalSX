@@ -2,6 +2,8 @@ package com.example.hospitalsx.ui.editar;
 
 import android.app.DatePickerDialog;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,9 +27,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.hospitalsx.R;
 import com.example.hospitalsx.bd.sqlite;
 import com.example.hospitalsx.databinding.FragmentEditarBinding;
-import com.example.hospitalsx.databinding.FragmentEditarBinding;
 import com.example.hospitalsx.ui.crear.CrearViewModel;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class EditarFragment extends Fragment implements  View.OnClickListener, AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener{
@@ -237,7 +239,8 @@ public class EditarFragment extends Fragment implements  View.OnClickListener, A
                     String peso = etPeso.getText().toString().trim();
 
                     sqlite.abrir();
-                    if (sqlite.addRegistroPaciente(id, a, d, nom, sex, fecha, edad, estatura, peso, img)){
+                    String actualizacion = sqlite.updateRegistroPaciente(id, a, d, nom, sex, fecha, edad, estatura, peso, img);
+                    if (actualizacion.contentEquals("Paciente actualizado con éxito")){
                         Toast.makeText(getContext(), "Información guardada con éxito", Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(getContext(), "Error al guardar la información", Toast.LENGTH_SHORT).show();
@@ -255,15 +258,17 @@ public class EditarFragment extends Fragment implements  View.OnClickListener, A
                         Cursor cursor = sqlite.getValor(idp);
                         if (cursor.moveToFirst()){
                             do {
-                                etNombre.setText(cursor.getString(1));
-                                a = cursor.getString(2);
-                                d = cursor.getString(3);
+                                etNombre.setText(cursor.getString(3));
+                                a = cursor.getString(1);
+                                d = cursor.getString(2);
                                 sex = cursor.getString(4);
                                 etFecha.setText(cursor.getString(5));
                                 etEdad.setText(cursor.getString(6));
                                 etEstatura.setText(cursor.getString(7));
                                 etPeso.setText(cursor.getString(8));
-                                //img = cursor.getString(9);
+                                img = cursor.getString(9);
+                                Bitmap imgBitMap = BitmapFactory.decodeFile(img);
+                                ivFoto.setImageBitmap(imgBitMap);
 
                             }while(cursor.moveToNext());
                         }

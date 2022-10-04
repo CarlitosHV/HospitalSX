@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.Editable;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,6 +117,7 @@ public class sqlite {
             return "Error de actualización";
         }
     }
+
 
     public Cursor getValor(int id){
         return db.rawQuery("SELECT * FROM PACIENTES WHERE ID =" + id, null);
